@@ -1,0 +1,17 @@
+{
+  "name": "mi-zi-grid-camera-gemini",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Overhead camera and tablet handwriting inputs for the Mi Zi Grid exhibition prototype.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/camera-core.test.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.12.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.7.5"
+  }
+}

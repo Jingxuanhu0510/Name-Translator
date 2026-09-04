@@ -1,0 +1,8 @@
+Version: Name Translator Submission 2026
+Main page: /exhibition.html
+Server entry: server.js
+Static folder: outputs
+Runtime: install dependencies with npm install
+Private environment file: not included
+
+This submission version is intended for GitHub and Render deployment. Do not commit .env or API keys.

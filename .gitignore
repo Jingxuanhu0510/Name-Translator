@@ -1,0 +1,9 @@
+.env
+node_modules/
+runtime/
+*.log
+*.pid
+.DS_Store
+Thumbs.db
+mizi-grid-recognition-debug/
+*_gemini-input.png

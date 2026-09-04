@@ -1,0 +1,130 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Name Translator / Exhibition</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./exhibition.css?v=p5-viewport-layer-20260804" />
+    <link rel="stylesheet" href="./waiting-scene.css?v=d-pocket-stroke-scale-20260804" />
+    <!-- Open-source libraries used:
+      p5.js: creative drawing, Name Translator rendering, and generated residue archive.
+      Socket.IO client: local real-time bridge between exhibition page and Node/Gemini server.
+      No API key is sent to the browser. Gemini runs server-side only. -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./vendor/p5.min.js?v=1.9.4-local"></script>
+    <script src="./camera-core.js?v=state-machine-fix-1"></script>
+  </head>
+  <body class="exhibition-body">
+    <section class="capture-layer" id="captureLayer" aria-live="polite">
+      <div class="live-card" id="liveCard">
+        <canvas id="liveCanvas" width="1280" height="520"></canvas>
+        <canvas id="frozenCanvas" width="1280" height="520"></canvas>
+        <canvas id="traceOverlayCanvas" width="1280" height="520"></canvas>
+        <div class="scan-line" id="scanLine"></div>
+        <div class="frame-markers" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="waiting-ritual waiting-layer" id="waitingRitual" aria-hidden="true">
+      <canvas id="waitingCanvas" aria-hidden="true"></canvas>
+      <div class="waiting-paper-grain" aria-hidden="true"></div>
+      <header class="waiting-project-mark">
+        <span>Name Translator</span>
+      </header>
+      <section class="waiting-visitor-prompt" aria-hidden="true">
+        <div class="waiting-placement-cue" aria-hidden="true">
+          <span class="waiting-placement-arrow"></span>
+          <span class="waiting-card-outline"></span>
+          <span class="waiting-placement-line"></span>
+        </div>
+        <p>PRESS SPACE TO BEGIN</p>
+        <span>THEN PLACE YOUR TRACE CARD UNDER THE CAMERA</span>
+      </section>
+    </section>
+
+    <aside class="exhibition-hud" id="exhibitionHud">
+      <div>
+        <p class="eyebrow">NAME TRANSLATOR / EXHIBITION MODE</p>
+        <h1 id="stateTitle">PRESS SPACE TO BEGIN</h1>
+        <p id="stateSubtitle">Open the writing field, then place your trace card under the camera.</p>
+      </div>
+      <div class="readout status-readout">
+        <span>SCAN STATUS</span>
+        <strong id="stateLabel">WAITING</strong>
+      </div>
+      <div class="readout word-readout">
+        <span>RECOGNISED WORD</span>
+        <strong id="wordLabel">--</strong>
+      </div>
+      <div class="readout groups-readout">
+        <span>GROUPS</span>
+        <strong id="groupsLabel">--</strong>
+      </div>
+      <div class="readout small input-readout">
+        <span>INPUT</span>
+        <strong id="inputHint">SPACE / PHYSICAL BUTTON TO BEGIN</strong>
+      </div>
+    </aside>
+
+    <section class="interaction-guide" aria-hidden="true">
+      <div class="interaction-step">
+        <span class="guide-icon guide-icon-card"></span>
+        <strong>PLACE CARD</strong>
+      </div>
+      <i></i>
+      <div class="interaction-step">
+        <span class="guide-icon guide-icon-write">
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M10 38 L13 28 L33 8 Q36 5 39 8 L40 9 Q43 12 40 15 L20 35 Z" />
+            <path d="M13 28 L20 35" />
+            <path d="M31 10 L38 17" />
+          </svg>
+        </span>
+        <strong>WRITE NAME</strong>
+      </div>
+      <i></i>
+      <div class="interaction-step">
+        <span class="guide-icon guide-icon-key"></span>
+        <strong>PRESS SPACE</strong>
+      </div>
+    </section>
+
+    <button class="scan-action" id="scanActionButton" type="button">
+      SCAN / TRANSLATE
+      <span>press space again or physical button</span>
+    </button>
+
+    <div class="setup-panel" id="setupPanel">
+      <p class="eyebrow">FIRST SETUP</p>
+      <h2>Start overhead camera</h2>
+      <p>Browser permission needs one click. After permission is saved, the exhibition can run from the single page.</p>
+      <button id="startCameraButton" type="button">Start camera</button>
+    </div>
+
+    <div class="diagnostics" id="diagnostics">
+      <pre id="diagnosticsText"></pre>
+    </div>
+
+    <div class="return-blackout" id="returnBlackout" aria-hidden="true">
+      <div class="return-title-card" id="returnTitleCard">
+        <div class="return-title-card__latin">NAME TRANSLATOR</div>
+      </div>
+    </div>
+
+    <video id="cameraVideo" autoplay muted playsinline></video>
+    <canvas id="analysisCanvas" hidden></canvas>
+    <canvas id="sourceCanvas" hidden></canvas>
+    <canvas id="recognitionCanvas" hidden></canvas>
+    <canvas id="traceCanvas" hidden></canvas>
+
+    <script>
+      window.MI_ZI_EXHIBITION_PAGE = true;
+    </script>
+    <script src="./mi_zi_grid_sketch.js?v=p5-body-layer-20260804"></script>
+  <script src="./waiting-scene.js?v=d-pocket-stroke-scale-20260804"></script>
+  <script src="./exhibition.js?v=back-half-single-source-20260804"></script>
+</body>
+</html>
