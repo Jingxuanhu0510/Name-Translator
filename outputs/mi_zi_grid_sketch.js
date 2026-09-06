@@ -408,6 +408,8 @@ const GLYPH_TEST_ALPHA_BY_RATIO = {
   "0.036": 188,
 };
 
+// Source of truth for the A-Z visual alphabet used by the generated square characters.
+// Documentation figures read this object directly instead of redrawing the symbols by hand.
 const MARKER_GLYPH_PATHS_V2 = {
   A: { strokes: [
     { kind: "polyline", points: [[0.38, 0.86], [0.52, 0.16]] },
@@ -3255,6 +3257,7 @@ function cleanRecognisedWord(input = "") {
 
 function splitWordIntoGlyphGroups(fullText) {
   const cleanWord = cleanRecognisedWord(fullText);
+  // Keep five-letter names together because the last two letters share the centre layout.
   if (cleanWord.length === 5) return [cleanWord.split("")];
 
   const groups = [];
@@ -3278,6 +3281,7 @@ function createGlyphGroupFromWord(recognisedWord, traceFeatures = {}) {
 
 function lettersToFourZoneDNA(letterGroup, traceFeatures = {}, groupIndex = 0) {
   const fixedLetters = letterGroup.slice(0, 5);
+  // Letters choose glyph components; their position comes from the fixed square-zone order.
   const items = fixedLetters.map((letter, index) => componentDNAForLetter(letter, markerFormalZoneKeyForIndex(index, fixedLetters.length), groupIndex, traceFeatures));
   return {
     letters: [...fixedLetters],
@@ -4466,6 +4470,7 @@ function drawGlyphTestTile(letter, x, y, side, profile, ratio, progress, colorKe
 function drawMarkerGlyphInTile(letter, profile, gx, gy, side, ratio, progress, colorKey = profile, half = "left") {
   const glyph = MARKER_GLYPH_PATHS_V2[letter];
   if (!glyph) return;
+  // Map the normalized glyph path into the active square zone before drawing it.
   const rawStrokes = glyph.strokes.map(markerStrokeToPoints);
   const bounds = markerGlyphBounds(rawStrokes);
   const strokeW = max(1, side * ratio);

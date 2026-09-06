@@ -2,7 +2,7 @@
   "name": "mi-zi-grid-camera-gemini",
   "version": "1.1.0",
   "private": true,
-  "description": "Overhead camera and tablet handwriting inputs for the Mi Zi Grid exhibition prototype.",
+  "description": "Interactive computational artwork for handwritten name transformation and generative glyph composition.",
   "scripts": {
     "start": "node server.js",
     "test": "node tests/camera-core.test.js"

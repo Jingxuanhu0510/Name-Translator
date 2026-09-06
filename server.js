@@ -1,20 +1,14 @@
-// Mi Zi Grid local tablet-to-screen server.
+// Name Translator local and Render-compatible server.
 // Run:
 //   npm install
 //   node server.js
 //
-// Open on the big screen:
-//   http://localhost:<PORT>/screen.html
-//
-// Open on the tablet/phone using the computer's LAN IP:
-//   http://YOUR_COMPUTER_IP:<PORT>/tablet.html
-//
-// If the tablet cannot connect, check that both devices are on the same Wi-Fi,
-// that the IP address is correct, and that the computer firewall allows the selected port.
+// Main exhibition page:
+//   http://localhost:<PORT>/exhibition.html
 //
 // Open-source libraries used:
-// - Express: lightweight local static server for screen.html and tablet.html.
-// - Socket.IO: real-time tablet-to-screen event relay.
+// - Express: lightweight static server for the exhibition pages.
+// - Socket.IO: real-time event relay between the page and the server.
 // - qrcode: QR matrix generation for the tablet input URL.
 // - dotenv: loads local Gemini credential variables from .env.
 // - Gemini API via @google/genai: recognition.js reads complete handwritten words from images.
@@ -216,7 +210,7 @@ io.on("connection", (socket) => {
       return;
     }
 
-    // 保存一份临时识别图，失败时方便检查裁切是否正确。
+    // Keep a temporary recognition image so capture problems can be checked without exposing the API key.
     saveDebugSubmissionImages(data, submissionId);
 
     io.emit("handwriting-status", {
@@ -224,7 +218,7 @@ io.on("connection", (socket) => {
       status: "RECOGNISING",
     });
 
-    // 这里真正调用 Gemini，并把结果广播回展览页面。
+    // Gemini reads the handwriting here. The visual transformation happens later in the p5.js renderer.
     const recognition = await getRecognitionOnce(submissionId, data.imageBase64);
     if (!recognition) return;
     console.log("[server] Gemini recognition complete", {

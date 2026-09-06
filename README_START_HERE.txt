@@ -1,24 +1,18 @@
-Name Translator private portable version
+Name Translator quick start
 
-This folder is for Jingxuan's private exhibition computers only.
-It includes the local .env file and should not be uploaded publicly.
+This repository version is prepared for source-code submission, GitHub review, and Render deployment.
 
-How to use on another Windows 10/11 64-bit computer:
+It does not include a real .env file, API key, node_modules folder, or portable runtime.
 
-1. Unzip the package.
-2. Double-click START_Mi_Zi_Grid.cmd.
-3. Keep the black server window open.
-4. Allow camera access in the browser.
-5. Press F11 for fullscreen.
-6. When finished, double-click STOP_Mi_Zi_Grid.cmd.
+For local testing:
 
-No Node.js installation is required.
-Do not run npm install.
-Do not upload this folder or ZIP to GitHub.
+1. Install Node.js LTS.
+2. Run npm install.
+3. Copy .env.example to .env.
+4. Add your own GEMINI_API_KEY value.
+5. Run npm start.
+6. Open http://127.0.0.1:3000/exhibition.html.
 
-中文说明：
+On Windows, START_PREVIEW.bat can be used after npm install and .env setup.
 
-这是私人展览便携包，里面包含本机 .env。
-换电脑时只需要解压，然后双击 START_Mi_Zi_Grid.cmd。
-黑色服务器窗口不要关闭，关闭后网页就不能运行。
-结束后双击 STOP_Mi_Zi_Grid.cmd。
+For the full project description, see README.md.

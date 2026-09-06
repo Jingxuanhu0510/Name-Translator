@@ -1,6 +1,7 @@
 (() => {
   "use strict";
 
+  // Waiting mode keeps the installation alive between visitors without starting recognition.
   const glyphs = [
         { id:'A', base:['M22 103 Q42 74 50 18'], latin:['M50 18 L79 103','M35 68 L67 68'], formed:['M19 37 L76 37','M72 37 L72 86'] },
         { id:'B', base:['M29 18 L29 103'], latin:['M29 18 C55 18 69 24 69 36 C69 47 56 55 29 55','M29 55 C58 55 72 64 72 78 C72 92 58 102 29 102'], formed:['M29 56 L70 56','M68 25 L68 91'] },

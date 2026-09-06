@@ -10,7 +10,7 @@
   }
 
   function computeCropRect(width, height) {
-    // 这里根据保存的 ROI 计算实际提交的摄像头裁切区域。
+    // Use the calibrated ROI so the submitted image focuses on the trace card, not the whole camera frame.
     const safeW = Math.max(1, Number(width) || 1);
     const safeH = Math.max(1, Number(height) || 1);
     const roi = cameraRoi();
@@ -138,7 +138,7 @@
   }
 
   function analyseInk(imageData, width, height, threshold) {
-    // 这里提取笔迹面积、宽高和粗细等简单特征。
+    // Extract simple ink features for state checks and visual fallback, not for name recognition.
     const data = imageData.data || imageData;
     const pixelCount = Math.max(1, width * height);
     const mask = new Uint8Array(pixelCount);

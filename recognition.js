@@ -1,4 +1,4 @@
-// Handwriting OCR wrapper for Mi Zi Grid.
+// Handwriting OCR wrapper for Name Translator.
 //
 // Open-source / cloud libraries used:
 // - @google/genai: official Gemini API SDK, used server-side only for image recognition.
@@ -78,7 +78,7 @@ async function recogniseFullHandwrittenWord(imageBase64, options = {}) {
       apiKeyConfigured: Boolean(process.env.GEMINI_API_KEY),
     });
 
-    // 这里把裁切后的图片交给 Gemini 读取。
+    // Gemini only reads the photographed handwriting. It does not generate the final glyph image.
     const response = await ai.models.generateContent({
       model: geminiModel(),
       contents: [

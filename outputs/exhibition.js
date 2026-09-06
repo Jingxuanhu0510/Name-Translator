@@ -46,7 +46,7 @@
     TRACE_UNRESOLVED: "TRACE_UNRESOLVED",
   };
 
-  // 这里规定页面只能按这些状态顺序走，避免跳错流程。
+  // Keep the exhibition in one readable loop: waiting, capture, recognition, rewrite, archive, reset.
   const ALLOWED_TRANSITIONS = {
     [STATES.BOOT]: [STATES.WAITING],
     [STATES.WAITING]: [STATES.CARD_DETECTED],
@@ -442,7 +442,7 @@
       event.preventDefault();
       event.stopPropagation();
     }
-    // 点击有效后立刻进入读取状态，让观众看到反馈。
+    // Move to the reading state immediately so the physical button feels responsive.
     logScan("event", { trigger });
     if (state.mode !== STATES.LIVE_WRITING || state.scanInProgress) {
       logScan("blocked", {
@@ -565,7 +565,7 @@
       visualFeatures: toScreenFeatures(detailedFeatures, outputWidth, outputHeight),
     };
 
-    // 这里把裁切后的图片发给本地服务器，再由服务器请求 Gemini。
+    // Send the cropped camera image to the server. Gemini recognition happens server-side.
     console.log("[exhibition] handwriting-submit", {
       submissionId: state.activePayload.submissionId,
       imageLength: state.activePayload.imageBase64.length,
@@ -592,7 +592,7 @@
     socket.emit("handwriting-submit", state.activePayload);
   }
 
-  // 这里处理 Gemini 返回的姓名，并把它交给字符生成器。
+  // Clean the recognised name before passing it into the rule-based glyph generator.
   function handleRecognitionResult(payload) {
     const recognition = payload.recognition || {};
     const fullText = String(recognition.fullText || "").toUpperCase().replace(/[^A-Z]/g, "");
